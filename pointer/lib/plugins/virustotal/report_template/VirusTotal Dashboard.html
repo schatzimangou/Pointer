@@ -1,0 +1,197 @@
+<html>
+<head>
+<title>VirusTotal Graphs</title>
+<script src="js/jquery-3.3.1.js" type="text/javascript"></script>
+<script src="js/highcharts.js" type="text/javascript"></script>
+<script src="js/jquery.highChartTable.js" type="text/javascript"></script>
+<script src="js/treemap.js" type="text/javascript"></script>
+<script src="js/sunburst.js" type="text/javascript"></script>
+<script src="js/heatmap.js" type="text/javascript"></script>
+
+
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/virustotal.graphs.css">
+</head>
+<body>
+
+<div class="gwrapper">
+    <div class="gdate"><span style="font-weight:bold">Generated at: </span>{{time}}</div>
+</div>
+
+<div class="wrapper">
+		<div id="gvt9" style="width: 50%; height: 100%; margin: 0 auto;float:left;"></div>
+        <div id="gvtnone" style="width: 5%; height: 100%; margin: 0 auto;float:left;"></div>
+	    <div id="gvt10" style="width: 42%; height: 90%; margin-top:20px;float:left;"></div>
+	
+</div>
+
+
+
+<script>
+
+
+$(document).ready(function() {
+
+
+ $('#gvt9').highcharts({
+ 	title: {
+        text: 'VirusTotal Sunburst Chart'
+    },
+    credits: false,
+    plotOptions:{
+        series:{
+            turboThreshold:5000//larger threshold or set to 0 to disable
+        }
+    },
+    series: [{
+        type: "sunburst",
+
+        allowDrillToNode: true,
+        cursor: 'pointer',
+        colors: ['#2f7ed8','#0d233a','#8bbc21','#910000','#1aadce','#492970','#f28f43','#77a1e5','#c42525','#a6c96a'],
+		    credits: {
+		      enabled: false
+		  	},
+        dataLabels: {
+            format: '{point.name}',
+            filter: {
+                property: 'innerArcLength',
+                operator: '>',
+                value: 5
+            }
+        },
+        levels: [{
+            level: 1,
+            levelIsConstant: false,
+            dataLabels: {
+                filter: {
+                    property: 'outerArcLength',
+                    operator: '>',
+                    value: 5
+                }
+            }
+        }, {
+            level: 2,
+            colorByPoint: true
+        },
+        {
+            level: 3,
+            visible:false,
+            colorVariation: {
+                key: 'brightness',
+                to: -0.5,
+            }
+        }, 
+        ],
+
+        data: [
+        {%for engine in engine_list%}
+        	{ id: '{{engine[0]}}', name: '{{engine[0]}}'},
+        {% endfor %}
+        {%for engine in engine_signature_dict.keys() %}
+	        {%for signature in engine_signature_dict[engine] %}
+		        {
+		        	id: '{{engine}}:{{signature[0]}}',
+		            name: '{{signature[0]}}',
+		            parent: '{{engine}}',
+		            value: {{signature[1]}}
+		        },
+		        
+        	{% endfor %}
+        {% endfor %}
+        {% for signature,r in signature_results.items() %}
+			{% for f in r.results %}
+        		 {
+		            name: '{{f.filename}}:{{f.sha256}}',
+		            parent: '{{f.engine}}:{{signature}}',
+		            value: 1
+		        },
+		    {% endfor %}
+        {% endfor %}
+        ]
+    }]
+});
+ 
+ $('#gvt10').highcharts({
+    credits: false,
+    plotOptions:{
+        series:{
+            turboThreshold:5000//larger threshold or set to 0 to disable
+        }
+    },
+    series: [{
+        
+        type: "treemap",
+        allowDrillToNode: true,
+        layoutAlgorithm: 'squarified',
+        alternateStartingDirection: true,
+        
+        dataLabels: {
+            enabled: false
+        },
+        levels: [{
+            level: 1,
+            layoutAlgorithm: 'squarified',
+            dataLabels: {
+                enabled: true,
+                align: 'left',
+                verticalAlign: 'top',
+                style: {
+                    fontSize: '15px',
+                    fontWeight: 'bold'
+                }
+            }
+        },
+       {
+            level: 2,
+            colorByPoint: true
+        },
+        {
+            level: 3,
+            visible:false,
+            colorVariation: {
+                key: 'brightness',
+                to: -0.5,
+            }
+
+        },
+        ],
+        data: [
+        {%for engine in engine_list%}
+            { id: '{{engine[0]}}', name: '{{engine[0]}}'},
+        {% endfor %}
+        {%for engine in engine_signature_dict.keys() %}
+            {%for signature in engine_signature_dict[engine] %}
+                {
+                    id: '{{engine}}:{{signature[0]}}',
+                    name: '{{signature[0]}}',
+                    parent: '{{engine}}',
+                    value: {{signature[1]}}
+                },
+                
+            {% endfor %}
+        {% endfor %}
+        {% for signature,r in signature_results.items() %}
+            {% for f in r.results %}
+                 {
+                    name: '{{f.filename}}:{{f.sha256}}',
+                    parent: '{{f.engine}}:{{signature}}',
+                    value: 1
+                },
+            {% endfor %}
+        {% endfor %}
+        ]
+    }],
+    title: {
+        text: 'VirusTotal Treemap Chart'
+    }
+});
+
+
+ //end of ondocload
+ });
+
+</script>
+
+</body>
+</html>

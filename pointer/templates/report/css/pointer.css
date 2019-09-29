@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+
+footer{
+	padding:0px;
+	width:100%;
+	min-height:30px !important;
+	background:blue;
+}
+
+html,body{
+	height:100%;
+	width:100%;
+	margin:0px;
+	padding:0px;
+}
+
+body{
+	display:flex;
+	flex-direction:column;
+	font:14px/1.5 'Open Sans',sans-serif;
+	color:#345;
+}
+
+main{
+	/*flex-grow:1;*/
+	overflow: auto;
+	overflow-y: hidden;
+	height:100%;
+	margin:0;
+	padding:0px;
+	margin-top:1px;
+}
+
+.container{
+	display:flex;
+	width:100%;
+	height:100%;
+	padding:0px;
+	margin:0px;
+}
+
+header.title{
+	min-height:50px !important;
+	width:100%;
+	border-bottom: 1px solid rgba(0,0,0,.2);
+	background-color: #f0f2f4;
+    background-repeat: no-repeat;
+    background-position:  left 15px center;
+	 background-image: url(data:image/png;base64,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);
+}
+
+div.title{
+	padding: 11px 0 0 75px;
+	font-size:20px;
+	float:left;
+}
+
+div.info{
+	padding: 16px 20px 0 0px;
+	font-size:13px;
+	float:right;
+}
+
+header.menu{
+	margin-top:10px;
+	min-height:50px !important;
+	width:100%;
+}
+
+/* Style the tab */
+.tab {
+  min-height:50px !important;
+  background-color: #fff;
+  padding-left:10px;
+  border-bottom:1px solid #abc;
+  z-index:0;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+	  font-weight:bold;
+  height:51px; /* account for border */
+  background-color: #fff;
+  float: left;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 13px;
+  border: 1px solid #fff;
+  border-top: 2px solid #fff;
+  border-bottom:1px solid #abc;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  color: #789;
+  cursor: pointer;
+}
+
+button:focus { outline:0 !important; }
+
+/* Create an active/current tablink class */
+.tab button.active {
+  color: #000;
+  border: 1px solid #abc;
+  /*border-top: 2px solid #0af;
+  margin-bottom:10px;
+  border-bottom:1px solid #fff;
+  */
+  font-weight:bold;
+  border-top: 2px solid #000;
+  margin-bottom:10px;
+  border-bottom:1px solid #fff
+}
+
+/* Style the tab content */
+.tabcontent {
+display: none;
+padding: 6px 12px;
+border: 0px solid #ccc;
+border-top: none;
+height:100%;
+width:100%;
+margin:0;
+padding:0px;
+}
+
+iframe {
+	height:100%;
+	width:100%;
+	margin:0px;
+	padding:0px;
+	border:0px;
+}
+
+::-webkit-scrollbar {
+    width: 0px;  /* 
+}
