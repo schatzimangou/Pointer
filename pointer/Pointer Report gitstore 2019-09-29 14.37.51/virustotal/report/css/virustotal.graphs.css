@@ -1,0 +1,19 @@
+div.gtitle{
+	font:18px/1.5 'Open Sans',sans-serif;
+	font-weight:bold;
+}
+
+table {
+	font-size:13px;
+}
+
+.gwrapper{
+   
+}
+
+div.gdate{
+float:right;
+
+margin-top:20px;
+margin-right:20px;
+}

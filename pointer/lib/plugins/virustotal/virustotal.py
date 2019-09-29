@@ -93,7 +93,7 @@ def process(*args, **kwargs):
 			for file in os.listdir(scan_directory):
 				file = os.path.abspath(os.path.join(scan_directory,file))
 				if os.path.isfile(file):
-					fpath = os.path.abspath(os.path.join(root,file))
+					fpath = file
 					extension = os.path.splitext(fpath)[1].lstrip('.')
 					if extension in scan_file_extensions:
 						if scan_new:
